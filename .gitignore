@@ -1,0 +1,5 @@
+pysync/.env
+pysync/__pycache__/
+test
+temp
+pretrained_models

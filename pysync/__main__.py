@@ -1,6 +1,5 @@
 import argparse
-import separate
-import sync
+import os
 
 def cli():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -10,26 +9,35 @@ def cli():
 
     args = parser.parse_args().__dict__
 
+    music_file = args['music']
+    lyrics_file = args['lyrics']
+
     if args['output_file']:
         output_file = args['output_file']
     else:
-        output_file = args['music'][0:args['music'].find('.')] + '.lrc'
+        output_file = os.path.splitext(os.path.basename(music_file))[0] + '.lrc'
+    print(f'Output file will be {output_file}')
 
-    temp_file = separate.separated_vocals(args['music'])
-    vocal_file_name = temp_file.name + '/' + args['music'][0:args['music'].find('.')] + '/vocals.wav'
+    # Separate vocal from music
+    from separate import Sep
+    sep = Sep()
 
-    print(vocal_file_name)
+    vocal_file = sep.separate_single(music_file)
+    print(f'Vocal file is {vocal_file}')
 
-    segments = sync.get_segments(vocal_file_name)
+    from sync import Sync
+    sync: Sync = Sync()
 
-    file = open(args['lyrics'], 'r')
-    full_lyrics = file.read()
-    file.close()
+    segments = sync.get_segments(vocal_file)
 
-    temp_file.cleanup()
+    # file = open(args['lyrics'], 'r')
+    # full_lyrics = file.read()
+    # file.close()
 
-    file = open(output_file, 'w')
-    file.writelines(sync.sync_segments(full_lyrics, segments))
-    file.close()
+    del sep
+
+    # file = open(output_file, 'w')
+    # file.writelines(sync.sync_segments(full_lyrics, segments))
+    # file.close()
 
 cli()
