@@ -1,5 +1,7 @@
 pysync/.env
-pysync/__pycache__/
+**/__pycache__/
+*.pyc
 test
 temp
 pretrained_models
+whisperx_models
