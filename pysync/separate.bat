@@ -29,9 +29,9 @@ echo Task ID: %task_id%
 echo ------------------------------------------
 
 REM Use 'conda run' to execute commands in the specified environment
-conda run -n %CONDA_ENV_NAME% python pysync\separate %input% %~2 --task-id %task_id%
+REM conda run -n %CONDA_ENV_NAME% python pysync\separate %input% %~2 --task-id %task_id%
 
 REM Alternative way
-REM call conda activate %CONDA_ENV_NAME%
-REM python pysync\separate %input% %~2 --task-id %task_id%
-REM call conda deactivate
+call conda activate %CONDA_ENV_NAME%
+python pysync\separate %input% %~2 --task-id %task_id%
+call conda deactivate

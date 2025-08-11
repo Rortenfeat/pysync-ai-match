@@ -32,9 +32,9 @@ echo Task ID: %task_id%
 echo ------------------------------------------
 
 REM Use 'conda run' to execute commands in the specified environment
-conda run -n %CONDA_ENV_NAME% --no-capture-output python pysync\sync %input% %output% %task_id%
+@REM conda run -n %CONDA_ENV_NAME% --no-capture-output python pysync\sync %input% %output% %task_id%
 
 REM Alternative way
-REM call conda activate %CONDA_ENV_NAME%
-REM python pysync\sync %input% %output% %task_id%
-REM call conda deactivate
+call conda activate %CONDA_ENV_NAME%
+python pysync\sync %input% %output% %task_id%
+call conda deactivate

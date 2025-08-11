@@ -69,19 +69,19 @@ class Sep:
 
             # 4. 分别保存人声和伴奏
             vocal_path = os.path.join(self.output_dir, f'{base_filename}_vocals_{random_hash}.wav')
-            accompaniment_path = os.path.join(self.output_dir, f'{base_filename}_accompaniment_{random_hash}.wav')
+            # accompaniment_path = os.path.join(self.output_dir, f'{base_filename}_accompaniment_{random_hash}.wav')
             
             # 使用音频适配器保存文件
             self.audio_loader.save(vocal_path, prediction['vocals'], self.sample_rate, codec='wav')
-            self.audio_loader.save(accompaniment_path, prediction['accompaniment'], self.sample_rate, codec='wav')
+            # self.audio_loader.save(accompaniment_path, prediction['accompaniment'], self.sample_rate, codec='wav')
 
             print(f"  -> Vocal saved to {vocal_path}")
-            print(f"  -> Accompaniment saved to {accompaniment_path}")
+            # print(f"  -> Accompaniment saved to {accompaniment_path}")
 
             # 5. 记录文件路径
             self.hash_map[filename] = {
                 'vocal': vocal_path,
-                'accompaniment': accompaniment_path
+                # 'accompaniment': accompaniment_path
             }
         except Exception as e:
             print(f"Error processing {filename}: {e}")

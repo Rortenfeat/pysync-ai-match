@@ -27,4 +27,5 @@ REM second: call sync.bat
 echo Running sync.bat...
 call pysync\sync.bat "%temp%" "%output%" "%task_id%"
 
-echo Done!
+echo Batch process completed.
+echo Please manually clear the temp directory.
