@@ -21,6 +21,20 @@ def format_time(t):
     centisecond: str = '{:02d}'.format(int(math.floor(t * 100) % 100))
     return f"[{minute}:{second}.{centisecond}]"
 
+def get_input_time(hint, default):
+    while True:
+        try:
+            input_str = input(f'{hint} (Directly press Enter to use default: {default}): ')
+            if not input_str:
+                return default
+            if ':' in input_str:
+                minute, second = input_str.split(':')
+                return float(minute) * 60 + float(second)
+            else:
+                return float(input_str)
+        except:
+            print('Invalid input, please try again.')
+
 
 def print_lrcs(task, output_dir):
     for input_file in task.keys():
@@ -112,7 +126,13 @@ class Speech:
                     vocal_file = self.task[input_file]['vocal']
                     vocal = whisperx.load_audio(vocal_file)
                     vocal_duration = vocal.shape[0] / 16000
-                    segments=  [{'start': 0.0, 'end': vocal_duration, 'text': ' '.join(self.task[input_file]['original_lyrics'])}]
+
+                    start_time = get_input_time(f'Please input the vocal start time of {input_file} (mm:ss)', 0.0)
+                    end_time = get_input_time(f'Please input the vocal end time of {input_file} (mm:ss)', vocal_duration)
+                    if end_time > vocal_duration:
+                        end_time = vocal_duration
+                    
+                    segments=  [{'start': start_time, 'end': end_time, 'text': ' '.join(self.task[input_file]['original_lyrics'])}]
                     result = whisperx.align(segments, model_a, metadata, vocal, device=self.device, return_char_alignments=False)
                     self.task[input_file]['alignment'] = result
             del model_a

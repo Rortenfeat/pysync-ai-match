@@ -1,7 +1,15 @@
-# Pysync Syncs Lyrics and Produces an LRC file using spleeter, whisper, and text similarity.
+# Align lyrics with songs and output enhanced .lrc format files.
+
+
+## Install
+
+1. Clone the repository
+2. `conda env create -f separate_env.yml`
+3. `conda env create -f sync_env.yml`
 
 ## Usage
 
-Pysync can be used using the command line. Setup the environment using conda and make sure that `whisper` and `spleeter` are installed. Then you can use this via the command line, providing an mp3 of the song and text file with lyrics you want to sync. The program will produce a .lrc file with timestamps which can be used by various lyric display programs.
+`run.bat <input_dir> <output_dir> [temp_dir]`
 
-`python pysync [-h] [--output_file OUTPUT_FILE] music lyrics`
+- `input_dir`: Directory containing the songs with one-to-one .txt files.
+- `output_dir`: Directory to save the enhanced lrc files.
